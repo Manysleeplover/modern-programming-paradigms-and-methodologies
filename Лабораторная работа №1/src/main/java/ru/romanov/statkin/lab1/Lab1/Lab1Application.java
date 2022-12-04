@@ -17,7 +17,7 @@ public class Lab1Application {
      * Инициализируем списки, вызываем целевой метод
      */
     public static void main(String[] args) {
-        //Метод, генерирующий список пар<Число, Строка> - где ключ последовательность от 1 до бесконечности, а значение либо "а" либо "б"
+        //Стрим, генерирующий список пар<Число, Строка> - где ключ последовательность от 1 до бесконечности, а значение либо "а" либо "б"
         //Ограничен 10 элементами
         List<ImmutablePair<Integer, String>> list = Stream.iterate(0, i -> i + 1).sequential().limit(10)
                 .map(i -> new ImmutablePair<>(i + 1, Math.random() >= 0.5 ? "a" : "b")).toList();

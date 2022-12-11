@@ -16,6 +16,12 @@ public class Main {
         System.out.print(getArrays(List.of(3, 4, 0, 2, 1, 2, 2, 4, 5)));
     }
 
+    /**
+     * Метод-обёртка, вызывающий целевой метод.
+     * Мапит лист в очередь, и закидывает внутренюю очередь для промежуточного результата
+     * @param integerList - лист на вход
+     * @return - Ожидаемая очередь листов
+     */
     public static ConcurrentLinkedQueue<List<Integer>> getArrays(List<Integer> integerList) {
         return processQueue(new ConcurrentLinkedQueue<>(integerList), new ConcurrentLinkedQueue<>());
     }
@@ -24,10 +30,9 @@ public class Main {
         if (integers.isEmpty()) {
             return outerQueue;
         }
-        int countOfDigits = integers.poll();
-        outerQueue.offer(integers.parallelStream().limit(countOfDigits).collect(Collectors.toList()));
-        integers.parallelStream().limit(countOfDigits).forEachOrdered(value -> integers.poll());
+        outerQueue.offer(integers.parallelStream().limit(integers.poll()).filter(integers::remove).collect(Collectors.toList()));
         return processQueue(integers, outerQueue);
     }
+
 
 }

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.print(getArrays(List.of(3, 4, 0, 2, 1, 2, 2, 4, 5)));
+        System.out.print(getArrays(List.of(1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4)));
     }
 
     /**
@@ -29,17 +29,21 @@ public class Main {
 
     /**
      * Целевой метод
-     * @param integers - исходные данные
+     *
+     * @param integers   - исходные данные
      * @param outerQueue - очередь с ожидаемыми массивами
      * @return - возвращает целевую очередь или вызывает сам себя, если исходные данные не кончились
      */
-    private static ConcurrentLinkedQueue<List<Integer>> processQueue(ConcurrentLinkedQueue<Integer> integers, ConcurrentLinkedQueue<List<Integer>> outerQueue) {
+    private static ConcurrentLinkedQueue<List<Integer>> processQueue(ConcurrentLinkedQueue<Integer> integers,
+                                                                     ConcurrentLinkedQueue<List<Integer>> outerQueue) {
         if (integers.isEmpty()) {
             return outerQueue;
         }
-        outerQueue.offer(integers.parallelStream().limit(integers.poll()).filter(integers::remove).collect(Collectors.toList()));
+        outerQueue.offer(integers
+                .parallelStream()
+                .limit(integers.poll())
+                .filter(integers::remove)
+                .collect(Collectors.toList()));
         return processQueue(integers, outerQueue);
     }
-
-
 }

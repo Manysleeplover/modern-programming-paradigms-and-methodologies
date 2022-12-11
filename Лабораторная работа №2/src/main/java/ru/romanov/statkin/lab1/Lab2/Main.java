@@ -19,6 +19,7 @@ public class Main {
     /**
      * Метод-обёртка, вызывающий целевой метод.
      * Мапит лист в очередь, и закидывает внутренюю очередь для промежуточного результата
+     *
      * @param integerList - лист на вход
      * @return - Ожидаемая очередь листов
      */
@@ -26,6 +27,12 @@ public class Main {
         return processQueue(new ConcurrentLinkedQueue<>(integerList), new ConcurrentLinkedQueue<>());
     }
 
+    /**
+     * Целевой метод
+     * @param integers - исходные данные
+     * @param outerQueue - очередь с ожидаемыми массивами
+     * @return - возвращает целевую очередь или вызывает сам себя, если исходные данные не кончились
+     */
     private static ConcurrentLinkedQueue<List<Integer>> processQueue(ConcurrentLinkedQueue<Integer> integers, ConcurrentLinkedQueue<List<Integer>> outerQueue) {
         if (integers.isEmpty()) {
             return outerQueue;
